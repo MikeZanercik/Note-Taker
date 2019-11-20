@@ -26,7 +26,7 @@ app.get("/api/notes", function(req, res) {
   app.post("/api/notes", function(req, res) {
     const newNote = JSON.stringify(req.body);
     console.log(newNote)
-    fs.appendFile(path.join(__dirname,"/public/db.json"), newNote , function (err) {
+    fs.appendFile(path.join(__dirname,"/public/db.json"), newNote, function (err) {
       if (err) throw err;
       console.log('Saved!');
     })

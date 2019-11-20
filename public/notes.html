@@ -25,7 +25,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-4 list-container">
-        <div class="card">
+        <div class="card">a
           <ul class="list-group">
           </ul>
         </div>
@@ -46,12 +46,6 @@
         name: $("#name").val().trim(),
         note: $("#note").val().trim(),
       };
-
-      $.post("/api/notes", newNote)
-        .then(function(data) {
-          console.log("notes.html", data);
-          alert("Adding note");
-        });
     });
   </script>
 </body>
