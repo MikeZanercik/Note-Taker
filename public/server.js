@@ -4,7 +4,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-var PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "index.html"));
@@ -16,13 +16,17 @@ app.get("/api/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "db.json"));
   });
 
-
-// app.post("/api/notes", function(req, res){
-//     var newNote = req.body;
-    
-// })
+  app.post("/api/notes", function(req, res) {
+    var newNote = req.body;
+    characters.push(newNote);
+    res.json(newNote);
+  });
+  app.delete("/api/notes/:id", function (req, res) {
+    res.send("Note Deleted")
+  })
+  
 
 
 app.listen(PORT, () => {
-    console.log(`Server listening at http://localhost:${PORT}`)
+    console.log(`Server listening at http://localhost:${PORT}/`)
 })
