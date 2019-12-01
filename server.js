@@ -22,25 +22,34 @@ app.get("/notes", (req, res) => {
 
 
 app.get("/api/notes", (req, res) => {
-  return res.json(db)
+  fs.readFile(path.join(__dirname, "./db.json"), "utf8", (err, data)=>{
+    if(err) throw err;
+    
+    return res.json(JSON.parse(data))
+  })
 });
 
 
 app.post("/api/notes", (req, res) => {
   const newNote = req.body;
-  console.log(newNote)
-  res.json(db.push(newNote));
-  fs.appendFile(path.join(__dirname, "/db.json"), JSON.stringify(newNote),  (err) => {
+
+  db.push({
+    id: db.length > 0 ? db[db.length - 1].id + 1 : 1,
+    ...newNote
+  })
+  fs.writeFile(path.join(__dirname, "./db.json"), JSON.stringify(db), err => {
     if (err) throw err;
-    console.log('Saved!');
-    console.log(db)
+    res.json(db)
   });
-  res.json(db)
-  
+
 });
 
 app.delete("/api/notes/:id", (req, res) => {
-  res.send("Note Deleted")
+  fs.writeFile(path.join(__dirname, "./db.json"), JSON.stringify(db.filter(note => note.id !== parseInt(req.params.id))), err => {
+    if (err) throw err;
+    // res.json(db)
+    res.send("Deleted")
+  })
 })
 
 
